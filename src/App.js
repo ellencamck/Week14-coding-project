@@ -1,23 +1,34 @@
+import React, { Component } from 'react';
+import MovieList from './components/movielist';
+import axios from 'axios';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  state = {
+    movies: [],
+  };
 
-export default App;
+  componentDidMount() {
+    const apiKey = 'e64fbaf0';
+
+    axios
+      .get(`http://www.omdbapi.com/?s=movie&type=movie&r=json&apikey=${apiKey}`)
+      .then((response) => {
+        console.log(response.data); // Log the response data
+        const movies = response.data.Search;
+        this.setState({ movies });
+      })
+      .catch((error) => {
+        console.error('Error fetching data from OMDB API:', error);
+      });
+  }
+
+  render() {
+    return (
+      <div className='App'>
+        <h1>MOVIES RATES&REVIEWS</h1>
+        <MovieList movies={this.state.movies} />
+      </div>
+    );
+  }
+}

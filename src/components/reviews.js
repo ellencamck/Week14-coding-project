@@ -1,9 +1,11 @@
-import React from "react" 
-// Define a class-based React component called "Nav"
-export default class Reviews extends React.Component {
+import React, { Component } from "react"; 
+
+export default class Review extends Component {
     render() {
+        const { text } = this.props;
+
       return (
-      <p>Reviews</p>
-      )
+        <li>{text}</li>
+      );
     }
 }
